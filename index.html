@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบประเมินความพึงพอใจ รปภ.เอกชน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        
+        <!-- ส่วนหัวและโลโก้ -->
+        <div class="header-content">
+            <img src="LOGO.png" alt="โลโก้กองกายภาพและสิ่งแวดล้อม" class="logo">
+            <h2>แบบประเมินความพึงพอใจ</h2>
+            <p>การให้บริการเจ้าหน้าที่รักษาความปลอดภัย</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ในส่วนตัวเลือกเดือน ให้แก้จาก <select> เป็น <button> และ <input type="hidden"> -->
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <div style="flex: 1;">
+                <label class="question-title" style="font-size: 14px; margin-bottom: 6px;">ประเมินประจำเดือน</label>
+                <!-- ปุ่มกดเพื่อเปิด Popup -->
+                <button type="button" id="btnMonthSelect" class="form-input-number" style="text-align: left; cursor: pointer; background: #fff; height: 43px;"></button>
+                <input type="hidden" id="monthValue" name="monthValue">
+            </div>
+            <div style="flex: 1;">
+                <label class="question-title" style="font-size: 14px; margin-bottom: 6px;">ปี พ.ศ.</label>
+                <select id="yearSelect" class="form-input-number" style="padding: 10px; height: 43px;"></select>
+            </div>
+        </div>
+
+        <!-- หน้า 1: เลือกพื้นที่ -->
+        <div id="area-selection-card">
+            <label class="question-title" style="text-align: center;">กรุณาเลือกพื้นที่รับผิดชอบ</label>
+            
+            <div class="area-buttons">
+                <button class="btn-area" data-area="ส่วนกลาง">ส่วนกลาง</button>
+                <button class="btn-area" data-area="อาคารสิริวิทยา">อาคารสิริวิทยา</button>
+                <button class="btn-area" data-area="ศูนย์การเรียนรู้มหิดล">ศูนย์การเรียนรู้มหิดล</button>
+                <button class="btn-area" data-area="มหิดลสิทธาคาร">มหิดลสิทธาคาร</button>
+                <button class="btn-area" data-area="สิริรุกขชาติ">สิริรุกขชาติ</button>
+                <button class="btn-area" data-area="หอพักนักศึกษา">หอพักนักศึกษา</button>
+            </div>
+        </div>
+
+        <!-- หน้า 2: ฟอร์มประเมิน -->
+<form id="surveyForm" style="display: none;">
+    <div class="header-selected-area" style="padding: 0 0 16px 0; border-bottom: 1px dashed #d1d5db; margin-bottom: 20px;">
+        <h3 id="selected-area-title" style="margin: 0; color: var(--primary-color);"></h3>
+        <button type="button" id="btn-back" class="btn-back">เปลี่ยนพื้นที่</button>
+    </div>
+
+    <!-- ข้อ 1. จำนวนผู้ตอบแบบสอบถาม -->
+    <div style="margin-bottom: 20px;">
+        <label class="question-title">1. จำนวนผู้ตอบแบบสอบถาม (คน) <span class="req" style="color: red;">*</span></label>
+        <input type="number" id="respondentCount" name="respondentCount" min="1" required class="form-input-number" placeholder="กรอกจำนวนคน">
+    </div>
+
+    <div id="rating-section"></div>
+
+    <div style="margin-top: 24px; margin-bottom: 24px;">
+        <label class="question-title">หมายเหตุ</label>
+        <textarea id="comment" name="comment" rows="4" class="form-textarea" placeholder="พิมพ์หมายเหตุ (ไม่บังคับ)..."></textarea>
+    </div>
+
+    <button type="submit" id="submitBtn" class="btn-submit" style="margin-bottom: 0;">ส่งแบบประเมิน</button>
+</form>
+
+    <!-- Popup แจ้งเตือนสำเร็จ -->
+    <div id="successModal" class="overlay" style="display: none;">
+        <div class="modal-content" style="text-align: center; padding: 32px 24px;">
+            <div style="font-size: 50px; margin-bottom: 16px;">✅</div>
+            <h2 style="color: var(--primary-color); margin-bottom: 8px;">เรียบร้อย</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">ระบบบันทึกข้อมูลการประเมินของคุณแล้ว</p>
+            <button type="button" id="closeSuccessModal" class="btn-submit" style="margin-bottom: 0; padding: 12px; border-radius: 8px;">ตกลง</button>
+        </div>
+    </div>
+
+    <div id="loading" class="overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>กำลังประมวลผลและบันทึกข้อมูล...</p>
+    </div>
+</div>
+
+<!-- Popup เลือกเดือน -->
+    <div id="monthModal" class="overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 style="margin-top: 0; margin-bottom: 16px; text-align: center; color: var(--primary-color);">เลือกเดือน</h3>
+            <div class="month-grid">
+                <button type="button" class="btn-month" data-val="01" data-name="มกราคม">มกราคม</button>
+                <button type="button" class="btn-month" data-val="02" data-name="กุมภาพันธ์">กุมภาพันธ์</button>
+                <button type="button" class="btn-month" data-val="03" data-name="มีนาคม">มีนาคม</button>
+                <button type="button" class="btn-month" data-val="04" data-name="เมษายน">เมษายน</button>
+                <button type="button" class="btn-month" data-val="05" data-name="พฤษภาคม">พฤษภาคม</button>
+                <button type="button" class="btn-month" data-val="06" data-name="มิถุนายน">มิถุนายน</button>
+                <button type="button" class="btn-month" data-val="07" data-name="กรกฎาคม">กรกฎาคม</button>
+                <button type="button" class="btn-month" data-val="08" data-name="สิงหาคม">สิงหาคม</button>
+                <button type="button" class="btn-month" data-val="09" data-name="กันยายน">กันยายน</button>
+                <button type="button" class="btn-month" data-val="10" data-name="ตุลาคม">ตุลาคม</button>
+                <button type="button" class="btn-month" data-val="11" data-name="พฤศจิกายน">พฤศจิกายน</button>
+                <button type="button" class="btn-month" data-val="12" data-name="ธันวาคม">ธันวาคม</button>
+            </div>
+            <button type="button" id="closeMonthModal" class="btn-back" style="width: 100%; margin-top: 16px; padding: 12px;">ยกเลิก</button>
+        </div>
+    </div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

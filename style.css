@@ -1,0 +1,209 @@
+:root {
+    --primary-color: #3b5f41; 
+    --accent-color: #9cb577; 
+    --bg-color: #f2f7f2; 
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --border-color: #d1d5db;
+}
+
+body {
+    font-family: 'Anuphan', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.container { 
+    width: 100%; 
+    max-width: 480px; 
+}
+
+/* ก้อนแบคกราวสีขาวหลักก้อนเดียวกัน */
+.main-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border-top: 6px solid var(--accent-color);
+    margin-bottom: 16px;
+}
+
+.header-content {
+    text-align: center;
+}
+
+.logo { 
+    width: 100%; 
+    max-width: 230px; 
+    height: auto; 
+    margin-bottom: 12px; 
+}
+
+h2 { 
+    margin: 0 0 6px 0; 
+    font-size: 21px; 
+    font-weight: 700;
+}
+
+p { 
+    margin: 0; 
+    color: var(--text-muted); 
+    font-size: 14px; 
+}
+
+.divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 20px 0;
+}
+
+.question-title { 
+    display: block; 
+    font-size: 16px; 
+    font-weight: 600; 
+    margin-bottom: 16px; 
+    line-height: 1.4; 
+}
+
+/* ปรับระยะห่าง (gap) และช่องไฟระหว่างปุ่ม */
+.area-buttons { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 14px; 
+}
+
+.btn-area {
+    width: 100%; 
+    background-color: #ffffff; 
+    color: var(--primary-color);
+    border: 1.5px solid var(--primary-color); 
+    padding: 14px 16px; 
+    font-size: 16px;
+    font-weight: 600; 
+    font-family: 'Anuphan', sans-serif; 
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.btn-area:hover, .btn-area:active { 
+    background-color: var(--primary-color); 
+    color: #ffffff; 
+    transform: translateY(-1px);
+}
+
+/* รูปแบบส่วนหัวตอนเลือกพื้นที่แล้ว */
+.header-selected-area { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 16px 20px;
+}
+
+.btn-back {
+    background-color: #f3f4f6; 
+    color: #374151; 
+    border: 1px solid #d1d5db; 
+    padding: 8px 14px;
+    border-radius: 8px; 
+    font-family: 'Anuphan', sans-serif; 
+    cursor: pointer; 
+    font-size: 14px; 
+    font-weight: 600;
+}
+
+/* ช่องกรอกข้อมูล */
+.form-input-number, .form-textarea {
+    width: 100%; 
+    padding: 12px 14px; 
+    border: 1px solid var(--border-color);
+    border-radius: 8px; 
+    font-family: 'Anuphan', sans-serif; 
+    font-size: 15px;
+    box-sizing: border-box; 
+    background-color: #f9fafb;
+}
+
+.form-input-number:focus, .form-textarea:focus { 
+    outline: none; 
+    border-color: var(--primary-color); 
+    background-color: #fff; 
+}
+
+.btn-submit {
+    width: 100%; 
+    background-color: var(--primary-color); 
+    color: white; 
+    border: none; 
+    padding: 16px;
+    font-size: 18px; 
+    font-weight: 700; 
+    font-family: 'Anuphan', sans-serif; 
+    border-radius: 12px;
+    cursor: pointer; 
+    box-shadow: 0 4px 12px rgba(59, 95, 65, 0.25); 
+    margin-top: 8px; 
+    margin-bottom: 24px;
+}
+
+.btn-submit:hover { 
+    background-color: #2c4a32; 
+}
+
+.overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(255,255,255,0.92);
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    z-index: 9999;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3; 
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px; 
+    animation: spin 1s linear infinite; 
+    margin-bottom: 12px;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* รูปแบบ Popup เลือกเดือน */
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 360px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.btn-month {
+    background-color: #f3f4f6;
+    color: var(--text-main);
+    border: 1px solid #d1d5db;
+    padding: 12px 8px;
+    border-radius: 8px;
+    font-family: 'Anuphan', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-month:hover, .btn-month.active {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
